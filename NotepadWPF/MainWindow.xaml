@@ -1,0 +1,125 @@
+﻿<Window x:Class="NotepadWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WPF Notepad" Height="350" Width="525">
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="styleTextBlockTP" >
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style TargetType="ToolTip" x:Key="styleToolTip">
+            <Setter Property="Background" Value="BlanchedAlmond" />
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <Menu>
+                <MenuItem Header="_File" >
+                    <MenuItem Header="_New" InputGestureText="Ctrl+N" />
+                    <MenuItem Header="_Open" InputGestureText="Crtl+O" Click="Open_Click"/>
+                    <Separator />
+                    <MenuItem Header="_Save" InputGestureText="Ctrl+S" Click="Save_Click"/>
+                    <MenuItem Header="Save _As" Click="SaveAs_Click" />
+                    <Separator />
+                    <MenuItem Header="_Close" Click="Close_Click"/>
+                </MenuItem>
+                <MenuItem Header="_Edit">
+                    <MenuItem Header="Undo" InputGestureText="Ctrl+Z" />
+                    <Separator />
+                    <MenuItem Header="Cut" InputGestureText="Ctrl+X" />
+                    <MenuItem Header="Copy" InputGestureText="Ctrl+C" />
+                    <MenuItem Header="Paste" InputGestureText="Ctrl+V" />
+                    <Separator />
+                    <MenuItem Header="Select All" InputGestureText="Crtl+A" />
+                </MenuItem>
+                <MenuItem Header="_Format" >
+                    <MenuItem Header="Wrap text" IsCheckable="True" Checked="WrapText_Checked" Unchecked="WrapText_Unchecked" />
+                    <MenuItem Header="Font" Click="Font_Click" />
+                    <MenuItem Header="Background" Click="Background_Click" />
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+        <ToolBar Name="ToolBarTop" DockPanel.Dock="Top" Height="28" >
+            <Button>
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource styleToolTip}" >
+                        <TextBlock Text="New file" Style="{StaticResource styleTextBlockTP}" />
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image Source="New.png" />
+            </Button>
+            <Button Click="Open_Click">
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource styleToolTip}" >
+                        <TextBlock Text="Open file" Style="{StaticResource styleTextBlockTP}" />
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image Source="Open.png" />
+            </Button>
+            <Button Click="Save_Click">
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource styleToolTip}" >
+                        <TextBlock Text="Save" Style="{StaticResource styleTextBlockTP}" />
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image Source="Save.png"/>
+            </Button>
+            <Separator />
+            <Button>
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource styleToolTip}" >
+                        <TextBlock Text="Cut" Style="{StaticResource styleTextBlockTP}" />
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image Source="Cut.png" />
+            </Button>
+            <Button>
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource styleToolTip}" >
+                        <TextBlock Text="Copy" Style="{StaticResource styleTextBlockTP}" />
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image Source="Copy.png" />
+            </Button>
+            <Button>
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource styleToolTip}" >
+                        <TextBlock Text="Paste" Style="{StaticResource styleTextBlockTP}" />
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image Source="Paste.png" />
+            </Button>
+            <Separator />
+            <ToggleButton Content="B" FontWeight="Bold" FontSize="14" Checked="BoldButton_Checked" Unchecked="BoldButton_Unchecked"/>
+            <ToggleButton Content="I" FontStyle="Italic" FontSize="14" Checked="ItalicButton_Checked" Unchecked="ItalicButton_Unchecked" />
+            <Separator />
+            <Button Click="MaximizeWindow_Click">
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource styleToolTip}" >
+                        <TextBlock Text="Full Screen" Style="{StaticResource styleTextBlockTP}" />
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image Source="FullScreen.png" />
+            </Button>
+            <Button>
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource styleToolTip}" >
+                        <TextBlock Text="Help" Style="{StaticResource styleTextBlockTP}" />
+                    </ToolTip>
+                </Button.ToolTip>
+                <Image Source="Help.png" />
+            </Button>
+                
+            
+        </ToolBar>
+        
+        <RichTextBox Name="MainRichTbx" TextBlock.LineHeight="0.1">
+            <RichTextBox.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="AliceBlue" Offset="0.6" />
+                    <GradientStop Color="Azure" Offset="0.8" />
+                </LinearGradientBrush>
+            </RichTextBox.Background>
+        </RichTextBox>
+        
+    </DockPanel>
+</Window>
