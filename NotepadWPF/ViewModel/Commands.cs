@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NotepadWPF.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -162,6 +163,22 @@ namespace NotepadWPF
             }
         }
 
+        private ICommand _CallWebSide;
+        public ICommand CallWebSide
+        {
+            get
+            {
+                if (_CallWebSide == null)
+                {
+                    _CallWebSide = new RelayCommand(
+                        argument => HelpClass.CallingPage(),
+                        argument => true
+                        );
+                }
+                return _CallWebSide;
+            }
+        }
+
        /* private  Brush _Color;
         public  Brush Color
         {
@@ -174,15 +191,19 @@ namespace NotepadWPF
             Grid grid = control as Grid;
 
             Color = grid.Background;
-        }
+        } */
 
-       /* private ICommand _CaretPositionCommand;
+      /*  private ICommand _CaretPositionCommand;
         public ICommand CaretPositionCommand
         {
-           /* get
+            get
             {
+                
                 if (_CaretPositionCommand == null)
-                    _CaretPositionCommand = new RelayCommand();
+                    _CaretPositionCommand = new RelayCommand(
+                        argument => { Editor editor = new Editor(argument); 
+                                      editor.LineNumber
+                        }
             }
         }*/
 

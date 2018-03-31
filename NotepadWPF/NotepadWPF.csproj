@@ -33,9 +33,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,6 +59,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\Commands.cs" />
+    <Compile Include="Model\DataIO.cs" />
+    <Compile Include="ViewModel\Editor.cs" />
+    <Compile Include="Model\EditorFormat.cs" />
+    <Compile Include="ViewModel\HelpClass.cs" />
+    <Compile Include="ViewModel\RelayCommand.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -95,19 +106,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Centre.png" />
-    <Resource Include="Copy.png" />
-    <Resource Include="Cut.png" />
-    <Resource Include="Email.png" />
-    <Resource Include="FullScreen.png" />
-    <Resource Include="Help.png" />
-    <Resource Include="Left.png" />
-    <Resource Include="New.png" />
-    <Resource Include="Open.png" />
-    <Resource Include="Paste.png" />
-    <Resource Include="Print.png" />
-    <Resource Include="Right.png" />
-    <Resource Include="Save.png" />
+    <Resource Include="Icon\Centre.png" />
+    <Resource Include="Icon\Copy.png" />
+    <Resource Include="Icon\Cut.png" />
+    <Resource Include="Icon\Email.png" />
+    <Resource Include="Icon\FullScreen.png" />
+    <Resource Include="Icon\Help.png" />
+    <Resource Include="Icon\Left.png" />
+    <Resource Include="Icon\New.png" />
+    <Resource Include="Icon\Open.png" />
+    <Resource Include="Icon\Paste.png" />
+    <Resource Include="Icon\Print.png" />
+    <Resource Include="Icon\Right.png" />
+    <Resource Include="Icon\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Icon2.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
