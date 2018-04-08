@@ -11,6 +11,14 @@ namespace NotepadWPF
 {
     class DataIO
     {
+        private static string _CurrentFileName = "";
+
+        public static string CurrentFileName
+        {
+            get { return _CurrentFileName; }
+            set { _CurrentFileName = value; }
+        }
+
         public static void OpenFile(object argument)
         {
             OpenFileDialog dialogOpen = new OpenFileDialog();
@@ -20,6 +28,7 @@ namespace NotepadWPF
             {
                 using (FileStream fileStream = new FileStream(dialogOpen.FileName, FileMode.Open))
                 {
+                    CurrentFileName = dialogOpen.FileName;
                     TextRange textRange = new TextRange((argument as System.Windows.Controls.RichTextBox).Document.ContentStart,
                                                          (argument as System.Windows.Controls.RichTextBox).Document.ContentEnd);
                     textRange.Load(fileStream, DataFormats.Text);
@@ -27,20 +36,41 @@ namespace NotepadWPF
             }   
         }
 
-        public static void SaveFile(object argument)
+        public static void SaveAsFile(object argument)
         {
             SaveFileDialog dialogSave = new SaveFileDialog();
             dialogSave.Title = "Save file...";
-            //dialogSave.Filter = "Text files(*.txt)|*.txt |Document files(*.doc, *.docx)|*.doc;*.docx |All files(*.*)|*.*";
             if (dialogSave.ShowDialog() == DialogResult.OK)
             {
                 using (FileStream fileStream = new FileStream(dialogSave.FileName, FileMode.Create))
                 {
+                    CurrentFileName = dialogSave.FileName;
                     TextRange textRange = new TextRange((argument as System.Windows.Controls.RichTextBox).Document.ContentStart,
                                                          (argument as System.Windows.Controls.RichTextBox).Document.ContentEnd);
                     textRange.Save(fileStream, DataFormats.Text);
+                    
+                }
+                
+            }
+        }
+
+        public static void SaveFile(object argument)
+        {
+            if (CurrentFileName != "")
+            {
+                using (FileStream fileStream = new FileStream(_CurrentFileName, FileMode.OpenOrCreate))
+                {
+                    TextRange textRange = new TextRange((argument as System.Windows.Controls.RichTextBox).Document.ContentStart,
+                                                         (argument as System.Windows.Controls.RichTextBox).Document.ContentEnd);
+                    textRange.Save(fileStream, DataFormats.Text);
+
                 }
             }
+            else
+            {
+                SaveAsFile(argument);
+            }
+                
         }
     }
 }

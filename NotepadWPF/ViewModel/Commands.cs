@@ -24,8 +24,8 @@ namespace NotepadWPF
                 if (_NewFileCommand == null)
                 {
                     _NewFileCommand = new RelayCommand(
-                        argument => { (argument as System.Windows.Controls.RichTextBox).Document.Blocks.Clear(); },
-                        // argument =>  (argument as System.Windows.Controls.RichTextBox).Document != null
+                        argument => { (argument as System.Windows.Controls.RichTextBox).Document.Blocks.Clear();
+                                       DataIO.CurrentFileName = ""; },
                         argument => true
                     );
                 }
@@ -49,6 +49,21 @@ namespace NotepadWPF
             }
         }
 
+
+        private ICommand _SaveAsFileCommand;
+        public ICommand SaveAsFileCommand
+        {
+            get
+            {
+                if (_SaveAsFileCommand == null)
+                {
+                    _SaveAsFileCommand = new RelayCommand(
+                        argument => DataIO.SaveAsFile(argument),
+                        argument => true);
+                }
+                return _SaveAsFileCommand;
+            }
+        }
 
         private ICommand _SaveFileCommand;
         public ICommand SaveFileCommand
@@ -99,19 +114,6 @@ namespace NotepadWPF
                         argument => { App.Current.MainWindow.WindowState = System.Windows.WindowState.Maximized; },
                         argument => true
                         );
-
-                   /* if (App.Current.MainWindow.WindowState == System.Windows.WindowState.Normal)
-                        _MaximizeAppCommand = new RelayCommand(
-                        argument => { App.Current.MainWindow.WindowState = System.Windows.WindowState.Minimized; },
-                        argument => true
-                        ); */
-                  /*  else if (App.Current.MainWindow.WindowState == System.Windows.WindowState.Maximized)
-                    {
-                        _MaximizeAppCommand = new RelayCommand(
-                       argument => { App.Current.MainWindow.WindowState = System.Windows.WindowState.Minimized; },
-                       argument => true
-                       );
-                    } */
                 }
                 return _MaximizeAppCommand;
             }
@@ -178,51 +180,6 @@ namespace NotepadWPF
                 return _CallWebSide;
             }
         }
-
-       /* private  Brush _Color;
-        public  Brush Color
-        {
-            get { return _Color; }
-            set { _Color = value; }
-        }
-
-        public void SetColor(object control)
-        {
-            Grid grid = control as Grid;
-
-            Color = grid.Background;
-        } */
-
-      /*  private ICommand _CaretPositionCommand;
-        public ICommand CaretPositionCommand
-        {
-            get
-            {
-                
-                if (_CaretPositionCommand == null)
-                    _CaretPositionCommand = new RelayCommand(
-                        argument => { Editor editor = new Editor(argument); 
-                                      editor.LineNumber
-                        }
-            }
-        }*/
-
-            /* public static void ClosingApp(object parameter)
-             {
-                 string text = new TextRange((parameter as System.Windows.Controls.RichTextBox).Document.ContentStart,
-                                             (parameter as System.Windows.Controls.RichTextBox).Document.ContentEnd).Text;
-                 if (text != null)
-                 {
-                     MessageBox.Show("The Notepad contains any text. Do you want to save it before closing?", "Closing...",
-                                     MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                 }
-                 else
-                 {
-                     App.Current.MainWindow.Close();
-                 } 
-                 App.Current.MainWindow.Close();
-             } */
-
-        }
+     }
 }
 

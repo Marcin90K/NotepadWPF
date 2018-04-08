@@ -6,7 +6,6 @@
         Icon="Icon\Icon2.ico">
     <Window.Resources>
         <local:Commands x:Key="commandsClass" />
-      <!--  <local:Editor x:Key="editorClass" /> -->
         <Style TargetType="TextBlock" x:Key="styleTextBlockTP" >
             <Setter Property="Background" Value="Transparent" />
         </Style>
@@ -42,6 +41,8 @@
                               CommandParameter="{Binding ElementName=MainRichTbx}"/>
                     <MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding SaveFileCommand}"
                               CommandParameter="{Binding ElementName=MainRichTbx}"/>
+                    <MenuItem Header="Save As" Command="{Binding SaveAsFileCommand}"
+                              CommandParameter="{Binding ElementName=MainRichTbx}"/>
                     <Separator />
                     <MenuItem Header="Close" InputGestureText="Alt+F4" Command="{Binding CloseAppCommand}"  />
                 </MenuItem>
@@ -67,6 +68,9 @@
                     </MenuItem>               
                     <MenuItem Header="Background" Command="{Binding SetBackground}" CommandParameter="{Binding ElementName=MainRichTbx}" >
                     </MenuItem>
+                </MenuItem>
+                <MenuItem Header="About">
+                    <MenuItem Header="Open Web" Command="{Binding CallWebSide}"/>
                 </MenuItem>
             </Menu>
         </StackPanel>
@@ -170,15 +174,7 @@
             </Button> 
         </ToolBar>
 
-       <!-- <StackPanel DockPanel.Dock="Bottom">
-            <StatusBar Name="BotomStatusBar" DataContext="{StaticResource editorClass}" >
-                <Label Content="Line:" />
-                <TextBlock Text="{Binding LineNumber}" />
-                <Label Content="Column:" />
-                <TextBlock Text="{Binding ColumnNumber}" />
-            </StatusBar>
-        </StackPanel> -->
-
+        
         <RichTextBox Name="MainRichTbx" TextBlock.LineHeight="0.1" Margin="5" Background="#FFF1F1F1" >
            <RichTextBox.ContextMenu>
                 <ContextMenu>
@@ -194,15 +190,7 @@
                     <MenuItem Header="Font color" Command="{Binding FontColorCommand}" 
                               CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ContextMenu}}, Path=PlacementTarget}" />
                 </ContextMenu>
-            </RichTextBox.ContextMenu>   
-         <!--  <RichTextBox.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="AliceBlue" Offset="0.6" />
-                    <GradientStop Color="Azure" Offset="0.8" />
-                </LinearGradientBrush>
-            </RichTextBox.Background> -->
+            </RichTextBox.ContextMenu>  
         </RichTextBox>
-        
-        
-    </DockPanel>
+    </DockPanel>  
 </Window>

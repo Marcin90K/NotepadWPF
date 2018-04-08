@@ -12,7 +12,6 @@ namespace NotepadWPF.ViewModel
     {
         public static void CallingPage()
         {
-            //WebRequest webRequest = WebRequest.Create("https://github.com/Marcin90K");
             Process.Start("https://github.com/Marcin90K");
         }
     }

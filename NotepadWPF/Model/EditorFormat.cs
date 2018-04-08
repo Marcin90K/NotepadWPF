@@ -20,7 +20,6 @@ namespace NotepadWPF
 
             if (fontDialog.ShowDialog() == DialogResult.OK)
             {
-                // (control as System.Windows.Controls.RichTextBox).FontFamily = new System.Windows.Media.FontFamily(fontDialog.Font.Name);
                 (control as System.Windows.Controls.RichTextBox).FontFamily = new System.Windows.Media.FontFamily(fontDialog.Font.Name);
                 (control as System.Windows.Controls.RichTextBox).FontSize = fontDialog.Font.Size;
                 (control as System.Windows.Controls.RichTextBox).FontStyle = fontDialog.Font.Italic ? FontStyles.Italic : FontStyles.Normal;
@@ -38,7 +37,6 @@ namespace NotepadWPF
             {
 
                 (control as System.Windows.Controls.RichTextBox).Foreground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(colorDialog.Color.A, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B));
-                SetSyntaxFont(control, syntaxFontColor);
             }
 
         }
@@ -53,14 +51,5 @@ namespace NotepadWPF
             }
         }
 
-        public static void SetSyntaxFont(object control, SolidColorBrush color)
-        {
-            string word = "dupa";
-            TextRange textRange = new TextRange((control as System.Windows.Controls.RichTextBox).Document.ContentStart, (control as System.Windows.Controls.RichTextBox).Document.ContentEnd);
-            //textRange.Text = word;
-            if (textRange.Text == word) 
-            textRange.ApplyPropertyValue(TextElement.ForegroundProperty, color);
-
-        }
     }
 }

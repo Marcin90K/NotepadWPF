@@ -61,7 +61,6 @@
     </ApplicationDefinition>
     <Compile Include="ViewModel\Commands.cs" />
     <Compile Include="Model\DataIO.cs" />
-    <Compile Include="ViewModel\Editor.cs" />
     <Compile Include="Model\EditorFormat.cs" />
     <Compile Include="ViewModel\HelpClass.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
@@ -123,6 +122,7 @@
   <ItemGroup>
     <Resource Include="Icon\Icon2.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
