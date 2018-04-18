@@ -18,15 +18,15 @@ Additionally, this application has been created in accordance with MVVM (Model -
 ## Application structure
 According to the MVVM the application consists of 3 main layers. 
 They are:
-* Model: application data
-* View: responsible for interaction with user
-* ViewModel: it is a intermediate layer between Model and View 
+* **Model**: application data
+* **View**: responsible for interaction with user
+* **ViewModel**: it is a intermediate layer between Model and View 
 There is no code-behind the MainWindow class, so it allows the View to be seperated from rest of layers. To ensure the seperation of layers and accordance with MVVM there are used such mechanisms as Commands and Data Binding.
 
 
 ## Features
 This app is a text editor. It allows to execute many activities with text using classic menu items or buttons othe toolbar or convenient key combinations. The user can set a font colors and background colors using dialog boxes.
-It is ready to use and can be improve by adding any other features.
+The app is working and can be improve by adding any other features.
 
 
 
