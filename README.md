@@ -20,7 +20,7 @@ According to the MVVM the application consists of 3 main layers.
 They are:
 * **Model**: application data
 * **View**: responsible for interaction with user
-* **ViewModel**: it is a intermediate layer between Model and View 
+* **ViewModel**: it is an intermediate layer between Model and View 
 There is no code-behind the MainWindow class, so it allows the View to be seperated from rest of layers. To ensure the seperation of layers and accordance with MVVM there are used such mechanisms as Commands and Data Binding.
 
 
