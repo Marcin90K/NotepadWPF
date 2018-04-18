@@ -8,7 +8,7 @@ This app has been made using .NET platforn and C# language. There has been utili
 Additionally, this application has been created in accordance with MVVM (Model - View - ViewModel) design pattern.
 
 ## Application screen
-![](https://github.com/Marcin90K/NotepadWPF/tree/master/NotepadWPF/Image/Notepad_Screen_1.png)
+![alt text](https://github.com/Marcin90K/NotepadWPF/tree/master/NotepadWPF/Image/Notepad_Screen_1.png)
 
 ## Application structure
 According to the MVVM the application consists of 3 main layers. They are Model (application data), View (rosponsible for interaction with user) and ViewModel (is a intermediate layer between Model and View). 
