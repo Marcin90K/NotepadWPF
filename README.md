@@ -10,7 +10,7 @@ Additionally, this application has been created in accordance with MVVM (Model -
 
 
 ## Application screen
-<img src="Image/Notepad_Screen_1.png" alt="Screen" />
+<img src="/Image/Notepad_Screen_1.png" alt="Screen" />
 [[https://github.com/Marcin90K/NotepadWPF/tree/master/NotepadWPF/Image/Notepad_Screen_1.png|alt=Notepad_Screen_1]]
 
 
