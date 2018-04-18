@@ -5,7 +5,7 @@ This is a Notepad text editor for Windows, reacher than a built-in standard Wind
 
 
 ## Used technologies
-This app has been made using .NET platforn and C# language. There has been utilized WPF (Windows Presentation Foundation), which is the technology for creating reach and modern User Interfaces.
+This app has been made using .NET platform and C# language. There has been utilized WPF (Windows Presentation Foundation), which is the technology for creating reach and modern User Interfaces.
 Additionally, this application has been created in accordance with MVVM (Model - View - ViewModel) design pattern.
 
 
@@ -16,7 +16,11 @@ Additionally, this application has been created in accordance with MVVM (Model -
 
 
 ## Application structure
-According to the MVVM the application consists of 3 main layers. They are Model (application data), View (rosponsible for interaction with user) and ViewModel (is a intermediate layer between Model and View). 
+According to the MVVM the application consists of 3 main layers. 
+They are:
+* Model: application data
+* View: responsible for interaction with user
+* ViewModel: it is a intermediate layer between Model and View 
 There is no code-behind the MainWindow class, so it allows the View to be seperated from rest of layers. To ensure the seperation of layers and accordance with MVVM there are used such mechanisms as Commands and Data Binding.
 
 
