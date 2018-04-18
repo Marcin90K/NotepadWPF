@@ -1,7 +1,7 @@
 # NotepadWPF
 
 ## Description 
-This is a Notepad text editor for Windows, reacher than a built-in standard Windows Notepad
+This is a Notepad text editor for Windows, reacher than a built-in standard Windows Notepad.
 
 
 ## Used technologies
