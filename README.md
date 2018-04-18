@@ -14,6 +14,7 @@ Additionally, this application has been created in accordance with MVVM (Model -
 
 
 
+
 ## Application structure
 According to the MVVM the application consists of 3 main layers. They are Model (application data), View (rosponsible for interaction with user) and ViewModel (is a intermediate layer between Model and View). 
 There is no code-behind the MainWindow class, so it allows the View to be seperated from rest of layers. To ensure the seperation of layers and accordance with MVVM there are used such mechanisms as Commands and Data Binding.
