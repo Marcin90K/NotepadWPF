@@ -11,11 +11,23 @@ using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Drawing;
+using NotepadWPF.Model;
 
-namespace NotepadWPF
+
+namespace NotepadWPF.ViewModel
 {
     class Commands
     {
+       private ViewModel.TextEditor textEditor = null;
+       // private Model.TextEditor textEditor = null;
+
+        public Commands()
+        {
+            //textEditor = new Model.TextEditor();
+            textEditor = new ViewModel.TextEditor();
+        }
+
         private ICommand _NewFileCommand;
         public ICommand NewFileCommand
         {
@@ -24,9 +36,14 @@ namespace NotepadWPF
                 if (_NewFileCommand == null)
                 {
                     _NewFileCommand = new RelayCommand(
-                        argument => { (argument as System.Windows.Controls.RichTextBox).Document.Blocks.Clear();
-                                       DataIO.CurrentFileName = ""; },
-                        argument => true
+                        argument =>
+                        {
+                            (argument as System.Windows.Controls.TextBox).Clear();
+                            //DataIO.CurrentFileName = "";
+                        }
+                        /*argument => { (argument as System.Windows.Controls.RichTextBox).Document.Blocks.Clear();
+                                       DataIO.CurrentFileName = ""; },*/
+                       // argument => true
                     );
                 }
                 return _NewFileCommand;
@@ -42,9 +59,14 @@ namespace NotepadWPF
                 if (_OpenFileCommand == null)
                 {
                     _OpenFileCommand = new RelayCommand(
-                        argument => DataIO.OpenFile(argument),
-                        argument => true);
-                };
+                        argument =>
+                            {
+                                string path = (string)argument;
+                                DataIO.OpenFile(path);
+                            });
+                        //argument => DataIO.OpenFile(argument),
+                        //argument => true);
+                }
                 return _OpenFileCommand;
             }
         }
@@ -58,14 +80,19 @@ namespace NotepadWPF
                 if (_SaveAsFileCommand == null)
                 {
                     _SaveAsFileCommand = new RelayCommand(
-                        argument => DataIO.SaveAsFile(argument),
-                        argument => true);
+                            argument =>
+                                {
+                                    string path = (string)argument;
+                                    DataIO.SaveAsFile(path, textEditor.Text);
+                                });
+                       /* argument => DataIO.SaveAsFile(argument),
+                        argument => true); */
                 }
                 return _SaveAsFileCommand;
             }
         }
 
-        private ICommand _SaveFileCommand;
+      /*  private ICommand _SaveFileCommand;
         public ICommand SaveFileCommand
         {
             get
@@ -78,7 +105,7 @@ namespace NotepadWPF
                 }
                 return _SaveFileCommand;
             }
-        }
+        }*/
 
 
         private ICommand _CloseAppCommand;
@@ -89,8 +116,8 @@ namespace NotepadWPF
                 if (_CloseAppCommand == null)
                 {
                     _CloseAppCommand = new RelayCommand(
-                        argument => { App.Current.MainWindow.Close(); },
-                        argument => true
+                        argument => { App.Current.MainWindow.Close(); }
+                        //argument => true
                         );
                 }
                 return _CloseAppCommand;
@@ -106,13 +133,13 @@ namespace NotepadWPF
                 {
                     if (App.Current.MainWindow.WindowState == System.Windows.WindowState.Maximized)
                         _MaximizeAppCommand = new RelayCommand(
-                        argument => { App.Current.MainWindow.WindowState = System.Windows.WindowState.Minimized; },
-                        argument => true
+                        argument => { App.Current.MainWindow.WindowState = System.Windows.WindowState.Minimized; }
+                        //argument => true
                         );
                     else
                         _MaximizeAppCommand = new RelayCommand(
-                        argument => { App.Current.MainWindow.WindowState = System.Windows.WindowState.Maximized; },
-                        argument => true
+                        argument => { App.Current.MainWindow.WindowState = System.Windows.WindowState.Maximized; }
+                        //argument => true
                         );
                 }
                 return _MaximizeAppCommand;
@@ -127,8 +154,16 @@ namespace NotepadWPF
                 if (_FontSettingsCommand == null)
                 {
                     _FontSettingsCommand = new RelayCommand(
-                        argument => EditorFormat.SetFont(argument),
-                        argument => true
+                        argument =>
+                            {
+                                Font font = (Font)argument;
+                                textEditor.FontFamily = EditorFormat.SetFontFamily(font);
+                                textEditor.FontSize = EditorFormat.SetFontSize(font);
+                                textEditor.FontStyle = EditorFormat.SetFontStyle(font);
+
+                            }
+                        /*argument => EditorFormat.SetFont(argument),
+                        argument => true*/
                         );
                 }
                 return _FontSettingsCommand;
@@ -140,6 +175,23 @@ namespace NotepadWPF
         {
             get
             {
+            if (_FontColorCommand == null)
+                    _FontColorCommand = new RelayCommand(
+                        argument =>
+                        {
+                            SolidColorBrush solidColor = (SolidColorBrush)argument;
+                            textEditor.FontColor = EditorFormat.SetFontColor(solidColor);
+                        }
+                        );
+                return _FontColorCommand;
+            }
+        }
+
+        /*private ICommand _FontColorCommand;
+        public ICommand FontColorCommand
+        {
+            get
+            {
                 if (_FontColorCommand == null)
                     _FontColorCommand = new RelayCommand(
                         argument => EditorFormat.SetFontColor(argument),
@@ -147,9 +199,9 @@ namespace NotepadWPF
                             );
                 return _FontColorCommand;
             }
-        }
+        }*/
 
-        private ICommand _SetBackground;
+        /*private ICommand _SetBackground;
         public ICommand SetBackground
         {
             get
@@ -163,7 +215,26 @@ namespace NotepadWPF
                 }
                 return _SetBackground;
             }
+        }*/
+
+        private ICommand _BackgroundColorCommand;
+        public ICommand BackgroundColorCommand
+        {
+            get
+            {
+                if (_BackgroundColorCommand == null)
+                    _BackgroundColorCommand = new RelayCommand(
+                        o =>
+                        {
+                            SolidColorBrush solidColor = (SolidColorBrush)o;
+                            textEditor.BackgroundColor = EditorFormat.SetBackground(solidColor);
+                        }
+                        );
+                return _BackgroundColorCommand;
+            }
         }
+
+
 
         private ICommand _CallWebSide;
         public ICommand CallWebSide
@@ -173,8 +244,8 @@ namespace NotepadWPF
                 if (_CallWebSide == null)
                 {
                     _CallWebSide = new RelayCommand(
-                        argument => HelpClass.CallingPage(),
-                        argument => true
+                        argument => HelpClass.CallingPage()
+                        //argument => true
                         );
                 }
                 return _CallWebSide;

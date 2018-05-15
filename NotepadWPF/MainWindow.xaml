@@ -2,10 +2,12 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:NotepadWPF"
+        xmlns:vm="clr-namespace:NotepadWPF.ViewModel"
         Title="WPF Notepad" Height="450" Width="725" Name="Win"
         Icon="Icon\Icon2.ico">
     <Window.Resources>
-        <local:Commands x:Key="commandsClass" />
+        <vm:Commands x:Key="commandsClass" />
+        <vm:TextEditor x:Key="textContClass" />
         <Style TargetType="TextBlock" x:Key="styleTextBlockTP" >
             <Setter Property="Background" Value="Transparent" />
         </Style>
@@ -14,15 +16,13 @@
         </Style>
     </Window.Resources>
     <Window.DataContext>
-        <local:Commands />
+        <vm:Commands />
     </Window.DataContext>
     <Window.InputBindings>
         <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewFileCommand}"
-                    CommandParameter="{Binding ElementName=MainRichTbx}"/>
-        <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenFileCommand}"
-                    CommandParameter="{Binding ElementName=MainRichTbx}" />
-        <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveFileCommand}"
-                    CommandParameter="{Binding ElementName=MainRichTbx}" />
+                    CommandParameter="{Binding ElementName=MainTbx}"/>
+        <KeyBinding Key="O" Modifiers="Control" Command="{Binding ElementName=OpenFileDB, Path=Show}" />
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding ElementName=SaveFileDB, Path=Show}" />
         <KeyBinding Key="F4" Modifiers="Alt" Command="{Binding CloseAppCommand}" />
     </Window.InputBindings>
     <DockPanel Name="MainDockPanel">
@@ -36,13 +36,10 @@
             <Menu Background="Transparent">
                 <MenuItem Header="_File" >
                     <MenuItem Header="_New" InputGestureText="Ctrl+N" Command="{Binding NewFileCommand}" 
-                              CommandParameter="{Binding ElementName=MainRichTbx}" />
-                    <MenuItem Header="_Open" InputGestureText="Crtl+O" Command="{Binding OpenFileCommand}"
-                              CommandParameter="{Binding ElementName=MainRichTbx}"/>
-                    <MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding SaveFileCommand}"
-                              CommandParameter="{Binding ElementName=MainRichTbx}"/>
-                    <MenuItem Header="Save As" Command="{Binding SaveAsFileCommand}"
-                              CommandParameter="{Binding ElementName=MainRichTbx}"/>
+                              CommandParameter="{Binding ElementName=MainTbx}" />
+                    <MenuItem Header="_Open" InputGestureText="Crtl+O" Command="{Binding ElementName=OpenFileDB, Path=Show}" />
+                    <MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding ElementName=SaveFileDB, Path=Show}" />
+                    <MenuItem Header="Save As" Command="{Binding ElementName=SaveFileDB, Path=Show}" />
                     <Separator />
                     <MenuItem Header="Close" InputGestureText="Alt+F4" Command="{Binding CloseAppCommand}"  />
                 </MenuItem>
@@ -63,11 +60,11 @@
                         <MenuItem Header="Right" InputGestureText="Ctrl+R" Command="EditingCommands.AlignRight" />
                     </MenuItem>
                     <MenuItem Header="Font">
-                        <MenuItem Name="FontSettings" Header="Font settings" Command="{Binding FontSettingsCommand}" CommandParameter="{Binding ElementName=MainRichTbx}" />
-                        <MenuItem Header="Font color" Command="{Binding FontColorCommand}" CommandParameter="{Binding ElementName=MainRichTbx}" />
+                        <MenuItem Name="FontSettings" Header="Font settings" Command="{Binding ElementName=FontDB, Path=Show}" />
+                        <MenuItem Header="Font color" Command="{Binding ElementName=ColorFontDB, Path=Show}" />
                     </MenuItem>               
-                    <MenuItem Header="Background" Command="{Binding SetBackground}" CommandParameter="{Binding ElementName=MainRichTbx}" >
-                    </MenuItem>
+                    <MenuItem Header="Background" Command="{Binding ElementName=ColorBackgroundDB, Path=Show}" />
+
                 </MenuItem>
                 <MenuItem Header="About">
                     <MenuItem Header="Open Web" Command="{Binding CallWebSide}"/>
@@ -75,7 +72,7 @@
             </Menu>
         </StackPanel>
         <ToolBar Name="ToolBarTop" DockPanel.Dock="Top" Height="28" Background="Transparent">
-            <Button Command="{Binding NewFileCommand}" CommandParameter="{Binding ElementName=MainRichTbx}">
+            <Button Command="{Binding NewFileCommand}" CommandParameter="{Binding ElementName=MainTbx}">
                 <Button.ToolTip>
                     <ToolTip Style="{StaticResource styleToolTip}" >
                         <TextBlock Text="New file" Style="{StaticResource styleTextBlockTP}" />
@@ -83,7 +80,7 @@
                 </Button.ToolTip>
                 <Image Source="Icon\New.png" />
             </Button>
-            <Button Command="{Binding OpenFileCommand}" CommandParameter="{Binding ElementName=MainRichTbx}">
+            <Button Command="{Binding ElementName=OpenFileDB, Path=Show}">
                 <Button.ToolTip>
                     <ToolTip Style="{StaticResource styleToolTip}" >
                         <TextBlock Text="Open file" Style="{StaticResource styleTextBlockTP}" />
@@ -91,7 +88,7 @@
                 </Button.ToolTip>
                 <Image Source="Icon\Open.png" />
             </Button>
-            <Button Command="{Binding SaveFileCommand}" CommandParameter="{Binding ElementName=MainRichTbx}">
+            <Button Command="{Binding ElementName=SaveFileDB, Path=Show}" >
                 <Button.ToolTip>
                     <ToolTip Style="{StaticResource styleToolTip}" >
                         <TextBlock Text="Save" Style="{StaticResource styleTextBlockTP}" />
@@ -173,10 +170,28 @@
                 <Image Source="Icon\Help.png" />
             </Button> 
         </ToolBar>
-
         
-        <RichTextBox Name="MainRichTbx" TextBlock.LineHeight="0.1" Margin="5" Background="#FFF1F1F1" >
-           <RichTextBox.ContextMenu>
+        <local:OpenFileDialogBox x:Name="OpenFileDB" Caption="Open file..." 
+                                 Filter="Text document (*.txt)|*.txt"
+                                 FilterIndex="0" DefaultExt="txt" 
+                                 CommandFileOK="{Binding OpenFileCommand}"
+                                 CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=FilePath}" />
+        <local:SaveFileDialogBox x:Name="SaveFileDB" Caption="Save to file..."
+                                 Filter="Text document (*.txt)|*.txt"
+                                 FilterIndex="0" DefaultExt="txt"
+                                 CommandFileOK="{Binding SaveAsFileCommand}"
+                                 CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=FilePath}" />
+        <local:ColorPicker x:Name="ColorBackgroundDB" CommandColorOK="{Binding BackgroundColorCommand}"
+                           CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Color}" />
+        <local:ColorPicker x:Name="ColorFontDB" CommandColorOK="{Binding FontColorCommand}"
+                           CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Color}" />
+        <local:FontSetter x:Name="FontDB" CommandFontOK="{Binding FontSettingsCommand}"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Font}" />
+
+        <TextBox Name="MainTbx" TextBlock.LineHeight="0.1" Margin="5" AcceptsReturn="True" DataContext="{StaticResource textContClass}"
+                 Text="{Binding Text}" Background="{Binding BackgroundColor}" Foreground="{Binding FontColor}"
+                 FontFamily="{Binding FontFamily}" FontStyle="{Binding FontStyle}" FontSize="{Binding FontSize}">
+           <TextBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Cut" Command="ApplicationCommands.Cut" 
                               CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget}" />
@@ -190,7 +205,7 @@
                     <MenuItem Header="Font color" Command="{Binding FontColorCommand}" 
                               CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ContextMenu}}, Path=PlacementTarget}" />
                 </ContextMenu>
-            </RichTextBox.ContextMenu>  
-        </RichTextBox>
+            </TextBox.ContextMenu>  
+        </TextBox>
     </DockPanel>  
 </Window>

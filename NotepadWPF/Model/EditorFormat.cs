@@ -10,46 +10,38 @@ using System.Drawing;
 using System.Windows.Media;
 using System.Windows.Documents;
 
-namespace NotepadWPF
+namespace NotepadWPF.Model
 {
     class EditorFormat
     {
-        public static void SetFont(object control)
+        public static SolidColorBrush SetBackground(SolidColorBrush color)
         {
-            FontDialog fontDialog = new FontDialog();
-
-            if (fontDialog.ShowDialog() == DialogResult.OK)
-            {
-                (control as System.Windows.Controls.RichTextBox).FontFamily = new System.Windows.Media.FontFamily(fontDialog.Font.Name);
-                (control as System.Windows.Controls.RichTextBox).FontSize = fontDialog.Font.Size;
-                (control as System.Windows.Controls.RichTextBox).FontStyle = fontDialog.Font.Italic ? FontStyles.Italic : FontStyles.Normal;
-                (control as System.Windows.Controls.RichTextBox).FontWeight = fontDialog.Font.Bold ? FontWeights.Bold : FontWeights.Regular;
-            }
+            SolidColorBrush solidColor = color;
+            return solidColor;
         }
 
-        public static void SetFontColor(object control)
+        public static SolidColorBrush SetFontColor(SolidColorBrush color)
         {
-            ColorDialog colorDialog = new ColorDialog();
-            SolidColorBrush syntaxFontColor = new SolidColorBrush();
-            syntaxFontColor.Color = Colors.Blue;
-
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-
-                (control as System.Windows.Controls.RichTextBox).Foreground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(colorDialog.Color.A, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B));
-            }
-
+            SolidColorBrush solidColor = color;
+            return solidColor;
         }
 
-        public static void SetBackgroundColor(object control)
+        public static string SetFontFamily(Font font)
         {
-            ColorDialog colorDialog = new ColorDialog();
-
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                (control as System.Windows.Controls.RichTextBox).Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(colorDialog.Color.A, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B));
-            }
+            string fontFamily = font.FontFamily.Name;
+            return fontFamily;
         }
 
+        public static System.Drawing.FontStyle SetFontStyle(Font font)
+        {
+            System.Drawing.FontStyle fontStyle = font.Style;
+            return fontStyle;
+        }
+
+        public static double SetFontSize(Font font)
+        {
+            double fontSize = font.Size;
+            return fontSize;
+        }
     }
 }

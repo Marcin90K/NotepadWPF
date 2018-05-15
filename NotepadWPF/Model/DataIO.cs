@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
-using System.Windows.Forms;
 
-namespace NotepadWPF
+
+namespace NotepadWPF.Model
 {
     class DataIO
     {
@@ -19,9 +19,9 @@ namespace NotepadWPF
             set { _CurrentFileName = value; }
         }
 
-        public static void OpenFile(object argument)
+        public static string OpenFile(string path)
         {
-            OpenFileDialog dialogOpen = new OpenFileDialog();
+           /* OpenFileDialog dialogOpen = new OpenFileDialog();
             dialogOpen.Title = "Open file...";
             dialogOpen.Filter = "Text files(*.txt)|*.txt |Document files(*.doc, *.docx)|*.doc;*.docx |All files(*.*)|*.*";
             if (dialogOpen.ShowDialog() == DialogResult.OK)  //(System.Windows.Forms.DialogResult.OK)
@@ -33,12 +33,14 @@ namespace NotepadWPF
                                                          (argument as System.Windows.Controls.RichTextBox).Document.ContentEnd);
                     textRange.Load(fileStream, DataFormats.Text);
                 }
-            }   
+            }   */
+            string text = File.ReadAllText(path);
+            return text;
         }
 
-        public static void SaveAsFile(object argument)
+        public static void SaveAsFile(string path, string text)
         {
-            SaveFileDialog dialogSave = new SaveFileDialog();
+            /*SaveFileDialog dialogSave = new SaveFileDialog();
             dialogSave.Title = "Save file...";
             if (dialogSave.ShowDialog() == DialogResult.OK)
             {
@@ -51,10 +53,11 @@ namespace NotepadWPF
                     
                 }
                 
-            }
+            }*/
+            File.WriteAllText(path, text);
         }
 
-        public static void SaveFile(object argument)
+       /* public static void SaveFile(object argument)
         {
             if (CurrentFileName != "")
             {
@@ -71,6 +74,6 @@ namespace NotepadWPF
                 SaveAsFile(argument);
             }
                 
-        }
+        }*/
     }
 }

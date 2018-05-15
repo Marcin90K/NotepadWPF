@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace NotepadWPF
+namespace NotepadWPF.ViewModel
 {
     class RelayCommand : ICommand
     {
@@ -17,6 +17,12 @@ namespace NotepadWPF
             if (execute == null) throw new ArgumentNullException("execute");
             _Execute = execute;
             _CanExecute = canExecute;
+        }
+
+        public RelayCommand(Action<object> execute)
+        {
+            if (execute == null) throw new ArgumentNullException("execute");
+            _Execute = execute;
         }
 
         public bool CanExecute(object parameter)

@@ -59,11 +59,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ColorDialogBox.cs" />
+    <Compile Include="ColorPicker.cs" />
+    <Compile Include="CommandDialogBox.cs" />
+    <Compile Include="DialogBox.cs" />
+    <Compile Include="FileDialogBox.cs" />
+    <Compile Include="FontDialogBox.cs" />
+    <Compile Include="FontSetter.cs" />
+    <Compile Include="Model\TextEditor.cs" />
+    <Compile Include="OpenFileDialogBox.cs" />
+    <Compile Include="SaveFileDialogBox.cs" />
     <Compile Include="ViewModel\Commands.cs" />
     <Compile Include="Model\DataIO.cs" />
     <Compile Include="Model\EditorFormat.cs" />
     <Compile Include="ViewModel\HelpClass.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="ViewModel\TextEditor.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
