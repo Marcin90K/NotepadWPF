@@ -6,7 +6,6 @@
         Title="WPF Notepad" Height="450" Width="725" Name="Win"
         Icon="Icon\Icon2.ico">
     <Window.Resources>
-        <vm:Commands x:Key="commandsClass" />
         <vm:TextEditor x:Key="textContClass" />
         <Style TargetType="TextBlock" x:Key="styleTextBlockTP" >
             <Setter Property="Background" Value="Transparent" />
@@ -16,14 +15,15 @@
         </Style>
     </Window.Resources>
     <Window.DataContext>
-        <vm:Commands />
+        <vm:TextEditor />
     </Window.DataContext>
     <Window.InputBindings>
-        <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewFileCommand}"
+        <KeyBinding Key="N" Modifiers="Control" Command="{Binding Command.NewFileCommand}"
                     CommandParameter="{Binding ElementName=MainTbx}"/>
         <KeyBinding Key="O" Modifiers="Control" Command="{Binding ElementName=OpenFileDB, Path=Show}" />
         <KeyBinding Key="S" Modifiers="Control" Command="{Binding ElementName=SaveFileDB, Path=Show}" />
-        <KeyBinding Key="F4" Modifiers="Alt" Command="{Binding CloseAppCommand}" />
+        <KeyBinding Key="F4" Modifiers="Alt" Command="{Binding Command.CloseAppCommand}" />
+        <KeyBinding Key="B" Modifiers="Control" Command="EditingCommands.ToggleBold" />
     </Window.InputBindings>
     <DockPanel Name="MainDockPanel">
         <DockPanel.Background>
@@ -35,13 +35,13 @@
         <StackPanel Name="StackPanelTop"  DockPanel.Dock="Top">          
             <Menu Background="Transparent">
                 <MenuItem Header="_File" >
-                    <MenuItem Header="_New" InputGestureText="Ctrl+N" Command="{Binding NewFileCommand}" 
+                    <MenuItem Header="_New" InputGestureText="Ctrl+N" Command="{Binding Command.NewFileCommand}" 
                               CommandParameter="{Binding ElementName=MainTbx}" />
                     <MenuItem Header="_Open" InputGestureText="Crtl+O" Command="{Binding ElementName=OpenFileDB, Path=Show}" />
                     <MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding ElementName=SaveFileDB, Path=Show}" />
                     <MenuItem Header="Save As" Command="{Binding ElementName=SaveFileDB, Path=Show}" />
                     <Separator />
-                    <MenuItem Header="Close" InputGestureText="Alt+F4" Command="{Binding CloseAppCommand}"  />
+                    <MenuItem Header="Close" InputGestureText="Alt+F4" Command="{Binding Command.CloseAppCommand}"  />
                 </MenuItem>
                 <MenuItem Header="_Edit">
                     <MenuItem Header="Undo" InputGestureText="Ctrl+Z" Command="ApplicationCommands.Undo"/>
@@ -67,12 +67,12 @@
 
                 </MenuItem>
                 <MenuItem Header="About">
-                    <MenuItem Header="Open Web" Command="{Binding CallWebSide}"/>
+                    <MenuItem Header="Open Web" Command="{Binding Command.CallWebSide}"/>
                 </MenuItem>
             </Menu>
         </StackPanel>
         <ToolBar Name="ToolBarTop" DockPanel.Dock="Top" Height="28" Background="Transparent">
-            <Button Command="{Binding NewFileCommand}" CommandParameter="{Binding ElementName=MainTbx}">
+            <Button Command="{Binding Command.NewFileCommand}" CommandParameter="{Binding ElementName=MainTbx}">
                 <Button.ToolTip>
                     <ToolTip Style="{StaticResource styleToolTip}" >
                         <TextBlock Text="New file" Style="{StaticResource styleTextBlockTP}" />
@@ -153,7 +153,7 @@
                 <Image Source="Icon\Right.png" />
             </Button>
             <Separator />
-            <Button Command="{Binding MaximizeAppCommand}">
+            <Button Command="{Binding Command.MaximizeAppCommand}">
                 <Button.ToolTip>
                     <ToolTip Style="{StaticResource styleToolTip}" >
                         <TextBlock Text="Full Screen" Style="{StaticResource styleTextBlockTP}" />
@@ -161,7 +161,7 @@
                 </Button.ToolTip>
                 <Image Source="Icon\FullScreen.png" />
             </Button>
-            <Button Command="{Binding CallWebSide}">
+            <Button Command="{Binding Command.CallWebSide}">
                 <Button.ToolTip>
                     <ToolTip Style="{StaticResource styleToolTip}" >
                         <TextBlock Text="Help" Style="{StaticResource styleTextBlockTP}" />
@@ -174,22 +174,22 @@
         <local:OpenFileDialogBox x:Name="OpenFileDB" Caption="Open file..." 
                                  Filter="Text document (*.txt)|*.txt"
                                  FilterIndex="0" DefaultExt="txt" 
-                                 CommandFileOK="{Binding OpenFileCommand}"
+                                 CommandFileOK="{Binding Command.OpenFileCommand}"
                                  CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=FilePath}" />
         <local:SaveFileDialogBox x:Name="SaveFileDB" Caption="Save to file..."
                                  Filter="Text document (*.txt)|*.txt"
                                  FilterIndex="0" DefaultExt="txt"
-                                 CommandFileOK="{Binding SaveAsFileCommand}"
+                                 CommandFileOK="{Binding Command.SaveAsFileCommand}"
                                  CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=FilePath}" />
-        <local:ColorPicker x:Name="ColorBackgroundDB" CommandColorOK="{Binding BackgroundColorCommand}"
+        <local:ColorPicker x:Name="ColorBackgroundDB" CommandColorOK="{Binding Command.BackgroundColorCommand}"
                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Color}" />
-        <local:ColorPicker x:Name="ColorFontDB" CommandColorOK="{Binding FontColorCommand}"
+        <local:ColorPicker x:Name="ColorFontDB" CommandColorOK="{Binding Command.FontColorCommand}"
                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Color}" />
-        <local:FontSetter x:Name="FontDB" CommandFontOK="{Binding FontSettingsCommand}"
+        <local:FontSetter x:Name="FontDB" CommandFontOK="{Binding Command.FontSettingsCommand}"
                           CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Font}" />
 
-        <TextBox Name="MainTbx" TextBlock.LineHeight="0.1" Margin="5" AcceptsReturn="True" DataContext="{StaticResource textContClass}"
-                 Text="{Binding Text}" Background="{Binding BackgroundColor}" Foreground="{Binding FontColor}"
+        <TextBox Name="MainTbx" TextBlock.LineHeight="0.1" Margin="5" AcceptsReturn="True" 
+                 Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="{Binding BackgroundColor}" Foreground="{Binding FontColor}"
                  FontFamily="{Binding FontFamily}" FontStyle="{Binding FontStyle}" FontSize="{Binding FontSize}">
            <TextBox.ContextMenu>
                 <ContextMenu>
@@ -200,9 +200,9 @@
                     <MenuItem Header="Copy" Command="ApplicationCommands.Paste"
                               CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget}" />
                     <Separator />
-                    <MenuItem Header="Font settings" Command="{Binding FontSettingsCommand}" 
+                    <MenuItem Header="Font settings" Command="{Binding Command.FontSettingsCommand}" 
                               CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ContextMenu}}, Path=PlacementTarget}" />
-                    <MenuItem Header="Font color" Command="{Binding FontColorCommand}" 
+                    <MenuItem Header="Font color" Command="{Binding Command.FontColorCommand}" 
                               CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ContextMenu}}, Path=PlacementTarget}" />
                 </ContextMenu>
             </TextBox.ContextMenu>  

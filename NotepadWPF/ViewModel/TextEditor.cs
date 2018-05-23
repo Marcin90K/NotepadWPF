@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Media;
 using NotepadWPF.Model;
+using System.Windows;
 
 namespace NotepadWPF.ViewModel
 {
@@ -13,9 +14,12 @@ namespace NotepadWPF.ViewModel
     {
         Model.TextEditor model = null;
 
+        public Commands Command { get; set; }
+
         public TextEditor()
         {
             model = new Model.TextEditor();
+            Command = new Commands(this);
         }
 
         public string Text

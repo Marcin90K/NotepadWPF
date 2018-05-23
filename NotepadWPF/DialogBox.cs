@@ -14,10 +14,10 @@ namespace NotepadWPF
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string nazwaWlasciwosci)
+        protected void OnPropertyChanged(string parameter)
         {
             if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(nazwaWlasciwosci));
+                PropertyChanged(this, new PropertyChangedEventArgs(parameter));
 
         }
 

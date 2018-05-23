@@ -16,14 +16,6 @@ namespace NotepadWPF
         public DialogResult? FontDialogResult { get; protected set; }
         public Font Font { get; set; }
 
-        /*public SolidColorBrush Color { get; set; }
-        public Font FontFamily { get; set; }
-        public Font FontStyle { get; set; }
-        public Font FontWeight { get; set; }
-        public double FontSize { get; set; } */
-
-
-
         public System.Windows.Forms.FontDialog fontDialog = null;
 
         protected FontDialogBox()

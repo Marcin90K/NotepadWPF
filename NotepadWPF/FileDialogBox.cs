@@ -29,14 +29,14 @@ namespace NotepadWPF
                     fileDialog.FilterIndex = FilterIndex;
                     fileDialog.DefaultExt = DefaultExt;
 
-                    string sciezkaPliku = "";
-                    if (FilePath != null) sciezkaPliku = FilePath; else FilePath = "";
-                    if (argument != null) sciezkaPliku = (string)argument;
+                    string path = "";
+                    if (FilePath != null) path = FilePath; else FilePath = "";
+                    if (argument != null) path = (string)argument;
 
-                    if (!string.IsNullOrWhiteSpace(sciezkaPliku))
+                    if (!string.IsNullOrWhiteSpace(path))
                     {
-                        fileDialog.InitialDirectory = System.IO.Path.GetDirectoryName(sciezkaPliku);
-                        fileDialog.FileName = System.IO.Path.GetFileName(sciezkaPliku);
+                        fileDialog.InitialDirectory = System.IO.Path.GetDirectoryName(path);
+                        fileDialog.FileName = System.IO.Path.GetFileName(path);
                     }
 
                     FileDialogResult = fileDialog.ShowDialog();

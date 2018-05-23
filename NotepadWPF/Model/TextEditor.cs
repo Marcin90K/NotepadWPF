@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using NotepadWPF.ViewModel;
+using System.Windows;
 
 namespace NotepadWPF.Model
 {
@@ -12,8 +13,8 @@ namespace NotepadWPF.Model
     {
         public TextEditor()
         {
-            _BackgroundColor = Brushes.White;
-            _FontColor = Brushes.Black;
+           _BackgroundColor = Brushes.White;
+           _FontColor = Brushes.Black;
         }
 
         private string _TextStock;

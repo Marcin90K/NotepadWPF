@@ -13,20 +13,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Drawing;
 using NotepadWPF.Model;
+using System.ComponentModel;
 
 
 namespace NotepadWPF.ViewModel
 {
-    class Commands
+    class Commands 
     {
-       private ViewModel.TextEditor textEditor = null;
-       // private Model.TextEditor textEditor = null;
 
-        public Commands()
+        public ViewModel.TextEditor textEditor { get; set; } 
+
+        public Commands(ViewModel.TextEditor textEditorVM)
         {
-            //textEditor = new Model.TextEditor();
-            textEditor = new ViewModel.TextEditor();
+            textEditor = textEditorVM;
         }
+
 
         private ICommand _NewFileCommand;
         public ICommand NewFileCommand
@@ -41,9 +42,6 @@ namespace NotepadWPF.ViewModel
                             (argument as System.Windows.Controls.TextBox).Clear();
                             //DataIO.CurrentFileName = "";
                         }
-                        /*argument => { (argument as System.Windows.Controls.RichTextBox).Document.Blocks.Clear();
-                                       DataIO.CurrentFileName = ""; },*/
-                       // argument => true
                     );
                 }
                 return _NewFileCommand;
@@ -62,10 +60,8 @@ namespace NotepadWPF.ViewModel
                         argument =>
                             {
                                 string path = (string)argument;
-                                DataIO.OpenFile(path);
+                                textEditor.Text = DataIO.OpenFile(path);
                             });
-                        //argument => DataIO.OpenFile(argument),
-                        //argument => true);
                 }
                 return _OpenFileCommand;
             }
@@ -82,11 +78,9 @@ namespace NotepadWPF.ViewModel
                     _SaveAsFileCommand = new RelayCommand(
                             argument =>
                                 {
-                                    string path = (string)argument;
+                                    string path = (string)argument;                                
                                     DataIO.SaveAsFile(path, textEditor.Text);
                                 });
-                       /* argument => DataIO.SaveAsFile(argument),
-                        argument => true); */
                 }
                 return _SaveAsFileCommand;
             }
@@ -134,12 +128,10 @@ namespace NotepadWPF.ViewModel
                     if (App.Current.MainWindow.WindowState == System.Windows.WindowState.Maximized)
                         _MaximizeAppCommand = new RelayCommand(
                         argument => { App.Current.MainWindow.WindowState = System.Windows.WindowState.Minimized; }
-                        //argument => true
                         );
                     else
                         _MaximizeAppCommand = new RelayCommand(
                         argument => { App.Current.MainWindow.WindowState = System.Windows.WindowState.Maximized; }
-                        //argument => true
                         );
                 }
                 return _MaximizeAppCommand;
@@ -160,10 +152,7 @@ namespace NotepadWPF.ViewModel
                                 textEditor.FontFamily = EditorFormat.SetFontFamily(font);
                                 textEditor.FontSize = EditorFormat.SetFontSize(font);
                                 textEditor.FontStyle = EditorFormat.SetFontStyle(font);
-
                             }
-                        /*argument => EditorFormat.SetFont(argument),
-                        argument => true*/
                         );
                 }
                 return _FontSettingsCommand;
@@ -187,36 +176,6 @@ namespace NotepadWPF.ViewModel
             }
         }
 
-        /*private ICommand _FontColorCommand;
-        public ICommand FontColorCommand
-        {
-            get
-            {
-                if (_FontColorCommand == null)
-                    _FontColorCommand = new RelayCommand(
-                        argument => EditorFormat.SetFontColor(argument),
-                        argument => true
-                            );
-                return _FontColorCommand;
-            }
-        }*/
-
-        /*private ICommand _SetBackground;
-        public ICommand SetBackground
-        {
-            get
-            {
-                if (_SetBackground == null)
-                {
-                    _SetBackground = new RelayCommand(
-                        argument => EditorFormat.SetBackgroundColor(argument),
-                        argument => true
-                        );
-                }
-                return _SetBackground;
-            }
-        }*/
-
         private ICommand _BackgroundColorCommand;
         public ICommand BackgroundColorCommand
         {
@@ -224,9 +183,9 @@ namespace NotepadWPF.ViewModel
             {
                 if (_BackgroundColorCommand == null)
                     _BackgroundColorCommand = new RelayCommand(
-                        o =>
+                        argument =>
                         {
-                            SolidColorBrush solidColor = (SolidColorBrush)o;
+                            SolidColorBrush solidColor = (SolidColorBrush)argument;
                             textEditor.BackgroundColor = EditorFormat.SetBackground(solidColor);
                         }
                         );
@@ -245,7 +204,6 @@ namespace NotepadWPF.ViewModel
                 {
                     _CallWebSide = new RelayCommand(
                         argument => HelpClass.CallingPage()
-                        //argument => true
                         );
                 }
                 return _CallWebSide;

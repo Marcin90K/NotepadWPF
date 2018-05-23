@@ -24,8 +24,6 @@ namespace NotepadWPF
             execute =
             argument =>
             {
-                //System.Drawing.Color solidColor;
-               // Color color = colorDialog.Color;
                 SolidColorBrush solidColor = null;
                 if (Color != null) solidColor = new SolidColorBrush(System.Windows.Media.Color.FromArgb(colorDialog.Color.A, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B)); else solidColor = null;
                 if (argument != null) solidColor = (SolidColorBrush)argument;
