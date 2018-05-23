@@ -31,12 +31,11 @@ The app is working and can be improve by adding any other features.
 
 
 
-##Releases history:
+## Releases history:
 * v1.0.0:  
-
-        The first released version
-* v2.0.0: 
-
-         - The RichTextBox has been replaced with the TexBox
-         - All Dialog Boxes have been implemented in the View layer instead of ViewModel to be align with MVVM convesion.
+     The first released version
+     
+* v2.0.0: (No compatible with previeous release)
+     - The RichTextBox has been replaced with the TexBox
+     - All Dialog Boxes have been implemented in the View layer instead of ViewModel to be align with MVVM convesion.
 
